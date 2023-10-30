@@ -1,0 +1,7 @@
+.container {
+    width: 30%;
+    border: 1px solid black;
+}
+.btn-primary{
+    background-color: rebeccapurple;
+}

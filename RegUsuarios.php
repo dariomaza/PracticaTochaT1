@@ -6,6 +6,7 @@
     <title>Document</title>
     <?php  require './Funciones/conexionTienda.php' ?>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="./CSS/style.css">
 </head>
 <body>
     <?php
@@ -59,24 +60,26 @@
         }
 
     ?>
+    <div class="container">
     <form action="" method="post" onsubmit="return validarFormulario()">
-        <label for="usuario">Usuario: </label>
-        <input type="text" name="usuario">
+        <label for="usuario"class="form-label">Usuario: </label>
+        <input type="text" name="usuario"  class="form-control">
         <?php  if(isset($err_usuario)) echo $err_usuario; ?><br>
-        <label for="nombre">Nombre: </label>
-        <input type="text" name="nombre">
+        <label for="nombre" class="form-label">Nombre: </label>
+        <input type="text" name="nombre"  class="form-control">
         <?php  if(isset($err_nombre)) echo $err_nombre; ?><br>
-        <label for="apellido">Apellido: </label>
-        <input type="text" name="apellido">
+        <label for="apellido" class="form-label">Apellido: </label>
+        <input type="text" name="apellido"  class="form-control">
         <?php  if(isset($err_apellido)) echo $err_apellido; ?><br>
-        <label for="contrasena">Contraseña: </label>
-        <input type="password" name="contrasena" id="contrasena">
+        <label for="contrasena" class="form-label">Contraseña: </label>
+        <input type="password" name="contrasena" id="contrasena"  class="form-control">
         <?php  if(isset($err_contra)) echo $err_contra; ?><br>
-        <label for="fecha_nacimiento">Fecha de nacimiento: </label>
-        <input type="date" name="fecha_nacimiento"><br>
-        <input type="submit" value="Enviar">
+        <label for="fecha_nacimiento" class="form-label">Fecha de nacimiento: </label>
+        <input type="date" name="fecha_nacimiento"  class="form-control"><br>
+        <input type="submit" value="Enviar" class="btn btn-primary">
     </form>
-    <a href="./login.php"><button>Iniciar sesion</button></a>
+    </div>
+    <!-- <a href="./login.php"><button>Iniciar sesion</button></a> -->
 
     <?php
         if(isset($usuario) && isset($nombre) && isset($apellido) && isset($chekedAge) && isset($contrasena)){
