@@ -61,6 +61,7 @@
 
     ?>
     <div class="container">
+        <h1>Registrate</h1>
     <form action="" method="post" onsubmit="return validarFormulario()">
         <label for="usuario"class="form-label">Usuario: </label>
         <input type="text" name="usuario"  class="form-control">
