@@ -103,7 +103,7 @@
                 if(isset($nombre) && isset($apellido)) echo "<h3>Bienvenido $nombre $apellido 😘</h3>";
                 
             } else {
-                echo "<h3>Tienes que tener entre 12 y 120 años para registrarte</h3>";
+                echo '<h3 class="error">Tienes que tener entre 12 y 120 años para registrarte</h3>';
             }
         } catch (mysqli_sql_exception $e) {
             echo  $e->getMessage();
