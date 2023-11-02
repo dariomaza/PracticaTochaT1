@@ -6,7 +6,7 @@
     <title>Document</title>
     <?php  require './Funciones/conexionTienda.php' ?>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="./CSS/style.css">
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
     <?php
@@ -47,7 +47,7 @@
             if(strlen($tContra) == 0) $err_contra = "La contraseña es obligatoria";
             else {
                 $regex = "/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@#$%^&+=!])(?!.*\s).{8,}$/";
-                if(!preg_match($regex,$tContra)) $err_contra = "La contraseña no cumple con los requisitos minimos (Minimo 8 carac, 1 mayus, 1 carac. esp y 1 numero).";
+                if(!preg_match($regex,$tContra)) $err_contra = "La contraseña no cumple con los requisitos minimos (Minimo 8 caracteres, 1 mayuscula, 1 caracter especial y 1 numero).";
                 else $contrasena = $tContra;
             }
 
@@ -62,23 +62,34 @@
     ?>
     <div class="container">
         <h1>Registrate</h1>
-    <form action="" method="post" onsubmit="return validarFormulario()">
-        <label for="usuario"class="form-label">Usuario: </label>
-        <input type="text" name="usuario"  class="form-control">
-        <?php  if(isset($err_usuario)) echo $err_usuario; ?><br>
-        <label for="nombre" class="form-label">Nombre: </label>
-        <input type="text" name="nombre"  class="form-control">
-        <?php  if(isset($err_nombre)) echo $err_nombre; ?><br>
-        <label for="apellido" class="form-label">Apellido: </label>
-        <input type="text" name="apellido"  class="form-control">
-        <?php  if(isset($err_apellido)) echo $err_apellido; ?><br>
-        <label for="contrasena" class="form-label">Contraseña: </label>
-        <input type="password" name="contrasena" id="contrasena"  class="form-control">
-        <?php  if(isset($err_contra)) echo $err_contra; ?><br>
-        <label for="fecha_nacimiento" class="form-label">Fecha de nacimiento: </label>
-        <input type="date" name="fecha_nacimiento"  class="form-control"><br>
-        <input type="submit" value="Enviar" class="register-btn">
-    </form>
+        <form action="" method="post" onsubmit="return validarFormulario()">
+            <div class="mb-3">
+                <label for="usuario"class="form-label">Usuario: </label>
+                <input type="text" name="usuario"  class="form-control">
+                <?php  if(isset($err_usuario)) echo '<p class="error">' . $err_usuario.'</p>'; ?>
+            </div>
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre: </label>
+                <input type="text" name="nombre"  class="form-control">
+                <?php  if(isset($err_nombre)) echo '<p class="error">' . $err_nombre.'</p>'; ?>
+            </div>
+            <div class="mb-3">
+                <label for="apellido" class="form-label">Apellido: </label>
+                <input type="text" name="apellido"  class="form-control">
+                <?php  if(isset($err_apellido)) echo '<p class="error">' . $err_apellido.'</p>'; ?>
+            </div>
+            <div class="mb-3" id="divPass">
+                <label for="contrasena" class="form-label">Contraseña: </label>
+                <input type="password" name="contrasena" id="contrasena"  class="form-control">
+                <img src="./Recursos/ojo.png" alt="" onclick='showPass()'>
+            </div>
+            <?php if(isset($err_contra)) echo '<p class="error">' . $err_contra.'</p>'; ?>
+            <div class="mb-3">
+                <label for="fecha_nacimiento" class="form-label">Fecha de nacimiento: </label>
+                <input type="date" name="fecha_nacimiento"  class="form-control">
+            </div>
+            <input type="submit" value="Enviar" class="register-btn" >
+        </form>
     </div>
     <!-- <a href="./login.php"><button>Iniciar sesion</button></a> -->
 
@@ -114,6 +125,7 @@
             return true;
         }
     </script>
+    <script src="./JS/showPass.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>

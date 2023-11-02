@@ -1,7 +1,36 @@
+/* 
+    #A8E8F9
+    #00537A
+    #013C58
+    #F5A201
+    #FFBA42
+    #FFD35B
+ */
+ body {
+    background-color: #A8E8F9;
+ }
 .container {
     width: 30%;
-    border: 1px solid rgb(255, 0, 0);
-    padding: 100px;
+    border: 1px solid #00537A;
+    background-color: #00537A;
+    border-radius: 40px;
+    padding: 50px;
+    margin-top: calc(50% - 45%);
+    box-shadow: 20px 20px 20px -8px #00537A;
+}
+h1 {
+    color:white;
+    border: 1px solid #FFBA42;
+    background-color: #FFBA42;
+    border-radius: 20px;
+    padding: 5px;
+    width: 250px;
+    text-align: center;
+}
+.form-label {
+    color: white;
+    text-decoration: underline #FFBA42 2px;
+    font-size: 20px;
 }
 .register-btn {
     text-decoration: none;
@@ -9,11 +38,28 @@
     padding: 5px 5px;
     border: 1px solid #0D3B66;
     background-color: #0D3B66;
-    font-size: 14px;
-    transition: all 2s;
+    font-size: 20px;
+    border-radius:15px;
+    transition: all 1s;
 }
 .register-btn:hover{
-    background-color: rgb(249, 87, 56);
-    border-color: rgb(249, 87, 56);
-    border-radius: 25px;
+    background-color: #FFBA42;
+    border-color: #FFBA42;
+}
+.form-control {
+    background-color: #013C58;
+    border: 1px solid #013C58;
+    color:white;
+}
+.error {
+    color: red;
+}
+#divPass {
+    display: flex;  
+}
+#divPass  * {
+    margin: 10px;
+}
+input[type="contrasena"]{
+    width: 80%;
 }
