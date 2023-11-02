@@ -6,7 +6,7 @@
     <title>Document</title>
     <?php  require './Funciones/conexionTienda.php' ?>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="./CSS/style.css">
+    <link rel="stylesheet" type="text/css" href="./CSS/style.css">
 </head>
 <body>
     <?php
@@ -77,7 +77,7 @@
         <?php  if(isset($err_contra)) echo $err_contra; ?><br>
         <label for="fecha_nacimiento" class="form-label">Fecha de nacimiento: </label>
         <input type="date" name="fecha_nacimiento"  class="form-control"><br>
-        <input type="submit" value="Enviar" class="btn btn-primary">
+        <input type="submit" value="Enviar" class="register-btn">
     </form>
     </div>
     <!-- <a href="./login.php"><button>Iniciar sesion</button></a> -->
