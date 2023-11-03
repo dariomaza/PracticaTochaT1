@@ -94,15 +94,22 @@ span[id="und"]:hover {
     text-align: center;
 }
 .container-login {
-    background-color: #A8E8F9;
+    background-color: #00537A;
     position: fixed;
     z-index: 10;
-    top: calc(50% - 30%);
+    top: calc(50% - 25%);
     left: calc(35%);
-    color: #000;
+    color: #fff;
     box-shadow: none;
+    border: 5px solid #fff;
 }
-.disabled-background {
+.container-login h3 > a{
+    color: #fff;
+}
+.container-login h3 > a:hover{
+    color: #FFBA42;
+}
+#disabled-background {
     background-color: #0000006e;
     width: 2000px;
     height: 2000px;

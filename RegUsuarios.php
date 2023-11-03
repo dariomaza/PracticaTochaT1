@@ -95,7 +95,7 @@
             <input type="submit" value="Registrarse" class="register-btn">
         </form>
     </div>
-    <div class="disabled-background" style="display:none"></div>
+    <div id="disabled-background" style="display:none"></div>
     
     <?php
         if(isset($usuario) && isset($nombre) && isset($apellido) && isset($chekedAge) && isset($contrasena_cifrada)){
@@ -103,19 +103,20 @@
             try {
                 echo '<div class="container container-login" id="div-modal">';
                 if($chekedAge) {
-                    /* $sql = "INSERT INTO usuarios(usuario, contrasena ,nombre, apellidos, fechaNacimiento) VALUES ('$usuario','$contrasena_cifrada','$nombre', '$apellido', '$tFecha')"; 
-                    $conexion->query($sql); */
+                    $sql = "INSERT INTO usuarios(usuario, contrasena ,nombre, apellidos, fechaNacimiento) VALUES ('$usuario','$contrasena_cifrada','$nombre', '$apellido', '$tFecha')"; 
+                    $conexion->query($sql);
                     if(isset($usuario)) {
                         
-                        echo "<h3>Usuario: $usuario registrado correctamente. Ya puedes <a href='login.php'><span id='und'>iniciar sesion</span></a></h3>";   
-                        ?> <script> desabilitar(); </script> <?php
-                        /* $sql = "INSERT INTO cestas (usuario) VALUES ('$usuario')";
-                        $conexion->query($sql); */
+                        echo "<h3>Usuario: $usuario registrado correctamente. Ya puedes <a href='login.php'>iniciar sesion</a></h3>";   
+                        ?> <script> /* desabilitar(); */ document.getElementById('disabled-background').style.display = "block"; </script> <?php
+                        $sql = "INSERT INTO cestas (usuario) VALUES ('$usuario')";
+                        $conexion->query($sql);
                     }
                     
                 } else {
                     echo '<h3 class="error">Tienes que tener entre 12 y 120 años para registrarte</h3>';
                     echo '<button onclick="aceptado()" class="register-btn">Aceptar</button>';
+                    ?> <script> document.getElementById('disabled-background').style.display = "block"; </script> <?php 
                 }
                 echo '</div>';
             }catch (mysqli_sql_exception $e) {
@@ -140,10 +141,10 @@
         function aceptado() {
             const div = document.getElementById("div-modal");
             div.style.zIndex = -1;
+            document.getElementById('disabled-background').style.display = "none";
         }
         function desabilitar() {
-            fondo = document.getElementByID("disabled-background");
-            fondo.setAttribute("style","display:block");
+            document.getElementById('disabled-background').style.display = "block";
         }   
     </script>
     <script src="./JS/showPass.js"></script>
