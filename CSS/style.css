@@ -93,12 +93,20 @@ span[id="und"]:hover {
     width: 450px;
     text-align: center;
 }
-#loginCorr{
-    color: #fff;
-}
 .container-login {
+    background-color: #A8E8F9;
     position: fixed;
+    z-index: 10;
+    top: calc(50% - 30%);
+    left: calc(35%);
+    color: #000;
+    box-shadow: none;
+}
+.disabled-background {
+    background-color: #0000006e;
+    width: 2000px;
+    height: 2000px;
+    position:fixed;
+    top: 0;
     z-index: 2;
-    top: calc(50% - 45%);
-    left: calc(25%);
 }

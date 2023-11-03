@@ -60,7 +60,8 @@
         }
 
     ?>
-    <div class="container">
+    
+    <div class="container" id="div-ppal">
         <h1 id="titulo">Registrate</h1>
         <form action="" method="post" onsubmit="return validarFormulario()">
             <div class="mb-3">
@@ -94,24 +95,29 @@
             <input type="submit" value="Registrarse" class="register-btn">
         </form>
     </div>
+    <div class="disabled-background" style="display:none"></div>
     
     <?php
         if(isset($usuario) && isset($nombre) && isset($apellido) && isset($chekedAge) && isset($contrasena_cifrada)){
+            
             try {
+                echo '<div class="container container-login" id="div-modal">';
                 if($chekedAge) {
                     /* $sql = "INSERT INTO usuarios(usuario, contrasena ,nombre, apellidos, fechaNacimiento) VALUES ('$usuario','$contrasena_cifrada','$nombre', '$apellido', '$tFecha')"; 
                     $conexion->query($sql); */
                     if(isset($usuario)) {
-                        echo '<div class="container container-login">';
-                        echo "<h3 id='loginCorr'>Usuario: $usuario registrado correctamente. Ya puedes <span id='und'><a href='login.php'>iniciar sesion</a></span></h3>";   
-                        echo '</div>';
+                        
+                        echo "<h3>Usuario: $usuario registrado correctamente. Ya puedes <a href='login.php'><span id='und'>iniciar sesion</span></a></h3>";   
+                        ?> <script> desabilitar(); </script> <?php
                         /* $sql = "INSERT INTO cestas (usuario) VALUES ('$usuario')";
                         $conexion->query($sql); */
                     }
                     
                 } else {
                     echo '<h3 class="error">Tienes que tener entre 12 y 120 años para registrarte</h3>';
+                    echo '<button onclick="aceptado()" class="register-btn">Aceptar</button>';
                 }
+                echo '</div>';
             }catch (mysqli_sql_exception $e) {
                 echo  $e->getMessage();
             }
@@ -131,6 +137,14 @@
             }
             return true;
         }
+        function aceptado() {
+            const div = document.getElementById("div-modal");
+            div.style.zIndex = -1;
+        }
+        function desabilitar() {
+            fondo = document.getElementByID("disabled-background");
+            fondo.setAttribute("style","display:block");
+        }   
     </script>
     <script src="./JS/showPass.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
