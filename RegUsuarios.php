@@ -48,7 +48,7 @@
             else {
                 $regex = "/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@#$%^&+=!])(?!.*\s).{8,}$/";
                 if(!preg_match($regex,$tContra)) $err_contra = "La contraseña no cumple con los requisitos minimos (Minimo 8 caracteres, 1 mayuscula, 1 caracter especial y 1 numero).";
-                else $contrasena = $tContra;
+                else $contrasena_cifrada = password_hash($tContra, PASSWORD_DEFAULT);
             }
 
             $fActual = date("Y-m-d");
@@ -61,10 +61,10 @@
 
     ?>
     <div class="container">
-        <h1>Registrate</h1>
+        <h1 id="titulo">Registrate</h1>
         <form action="" method="post" onsubmit="return validarFormulario()">
             <div class="mb-3">
-                <label for="usuario"class="form-label">Usuario: </label>
+                <label for="usuario" class="form-label">Usuario: </label>
                 <input type="text" name="usuario"  class="form-control">
                 <?php  if(isset($err_usuario)) echo '<p class="error">' . $err_usuario.'</p>'; ?>
             </div>
@@ -88,27 +88,34 @@
                 <label for="fecha_nacimiento" class="form-label">Fecha de nacimiento: </label>
                 <input type="date" name="fecha_nacimiento"  class="form-control">
             </div>
-            <input type="submit" value="Enviar" class="register-btn" >
+            <div class="mb-3">
+                <a href="./login.php" id="ALogin">¿Ya tienes cuenta? <span id="und">Inicia sesion</span></a>
+            </div>
+            <input type="submit" value="Registrarse" class="register-btn">
         </form>
     </div>
-    <!-- <a href="./login.php"><button>Iniciar sesion</button></a> -->
-
+    
     <?php
-        if(isset($usuario) && isset($nombre) && isset($apellido) && isset($chekedAge) && isset($contrasena)){
-        try {
-            if($chekedAge) {
-                $sql = "INSERT INTO usuarios(usuario, contrasena ,nombre, apellidos, fechaNacimiento) VALUES ('$usuario','$contrasena','$nombre', '$apellido', '$tFecha')"; 
-                $conexion->query($sql);
-                if(isset($usuario)) echo "<h3>Usuario: $usuario registrado</h3>";
-                if(isset($nombre) && isset($apellido)) echo "<h3>Bienvenido $nombre $apellido 😘</h3>";
-                
-            } else {
-                echo '<h3 class="error">Tienes que tener entre 12 y 120 años para registrarte</h3>';
+        if(isset($usuario) && isset($nombre) && isset($apellido) && isset($chekedAge) && isset($contrasena_cifrada)){
+            try {
+                if($chekedAge) {
+                    /* $sql = "INSERT INTO usuarios(usuario, contrasena ,nombre, apellidos, fechaNacimiento) VALUES ('$usuario','$contrasena_cifrada','$nombre', '$apellido', '$tFecha')"; 
+                    $conexion->query($sql); */
+                    if(isset($usuario)) {
+                        echo '<div class="container container-login">';
+                        echo "<h3 id='loginCorr'>Usuario: $usuario registrado correctamente. Ya puedes <span id='und'><a href='login.php'>iniciar sesion</a></span></h3>";   
+                        echo '</div>';
+                        /* $sql = "INSERT INTO cestas (usuario) VALUES ('$usuario')";
+                        $conexion->query($sql); */
+                    }
+                    
+                } else {
+                    echo '<h3 class="error">Tienes que tener entre 12 y 120 años para registrarte</h3>';
+                }
+            }catch (mysqli_sql_exception $e) {
+                echo  $e->getMessage();
             }
-        } catch (mysqli_sql_exception $e) {
-            echo  $e->getMessage();
         }
-    }
     ?>
     
     <script>

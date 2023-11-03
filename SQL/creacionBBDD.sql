@@ -16,12 +16,16 @@ CREATE TABLE usuarios (
     apellidos VARCHAR(40) NOT NULL,
     fechaNacimiento DATE NOT NULL
 );
+
+select * from usuarios;
+
 CREATE TABLE cestas (
     idCesta INT AUTO_INCREMENT PRIMARY KEY,
     usuario varchar(12),
     precio_total numeric(8,2) DEFAULT 0,
     constraint pk_cestas_usuario foreign key (usuario) references usuarios(usuario)
 );
+
 create table productosCestas (
 	idProducto INT,
     idCesta INT,
