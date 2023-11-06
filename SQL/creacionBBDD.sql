@@ -17,6 +17,15 @@ CREATE TABLE usuarios (
     fechaNacimiento DATE NOT NULL
 );
 
+create table fotosUsuarios (
+	idFoto int auto_increment primary key,
+    usuario varchar(12),
+    ruta varchar(100),
+    constraint pk_fotosUsuarios_usuario foreign key (usuario) references usuarios(usuario)
+);
+select * from fotosUsuarios;
+SELECT * FROM fotosUsuarios where usuario = 'dario19';
+
 select * from usuarios;
 
 CREATE TABLE cestas (
