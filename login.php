@@ -46,7 +46,7 @@
                 /* VARIABLES PERSISTENTES DURANTE TODA LA SESION EN LA PAGINA WEB */
                 session_start();
                 $_SESSION["usuario"] = $usuario;
-                header("Location: correcto.php");
+                header("Location: principal.php");
             } else {
                 echo "El usuario y/o la contraseña no son validos";
             }
