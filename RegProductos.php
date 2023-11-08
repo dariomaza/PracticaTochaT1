@@ -9,6 +9,11 @@
 </head>
 <body>
     <?php
+        function depurar (string $entrada) : string {
+            $salida = htmlspecialchars($entrada);
+            $salida = trim($salida);
+            return $salida;
+        }
         if($_SERVER["REQUEST_METHOD"] == "POST"){
             $tempNombre = $_POST["nombre"];
             $tempPrecio = $_POST["precio"];
@@ -42,11 +47,22 @@
                 else if($tempStock > 100000) $err_stock = "La cantidad maxima de stock es 100000";
                 else $stock = $tempStock;
             }
+            if(!isset($_FILES["imagen"])) $err_imgagen = "Es obligatorio subir una foto";
+            else {
+                echo $_FILES["imagen"]["type"];
+                if($_FILES["imagen"]["type"] === "image/png" || $_FILES["imagen"]["type"] === "image/jpg" || $_FILES["imagen"]["type"] === "image/jpeg"){
+                    if($_FILES["imagen"]["size"] >= (5e+6)) $err_imgagen = "El tamaño maximo de la imagen tiene que ser de 5 MegaBytes";
+                    else {
+                        $nombreArchivo = $_FILES['imagen']['name'];
+                        $rutaTemporal = $_FILES['imagen']['tmp_name'];
+                    }
+                } else $err_imgagen = "La imagen solo puede ser PNG, JPG o JPEG";
+            }
         }
     ?>
     <div class="container">
         <h1>Registro de productos</h1>
-        <form action="" method="post" onsubmit="return validarFormulario()">
+        <form action="" method="post" onsubmit="return validarFormulario()" enctype="multipart/form-data">
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="floatingInput" name="nombre" placeholder="Nombre:">
                 <label for="floatingInput">Nombre del producto: </label>
@@ -67,13 +83,21 @@
                 <label for="stock">Cantidad en stock: </label>
                 <?php  if(isset($err_nombre)) echo '<p class="error">' . $err_nombre.'</p>'; ?>
             </div>
+            <div class="form-floating mb-3">
+                <input type="file" name="imagen" id="imagen">
+                <?php  if(isset($err_imgagen)) echo '<p class="error">' . $err_imgagen.'</p>'; ?>
+            </div>
             <input type="submit" value="Registrar" class="btn btn-primary">
         </form>
     </div>
     <?php
-        if(isset($nombre) && isset($precio) && isset($descripcion) && isset($stock)){   
+        if(isset($nombre) && isset($precio) && isset($descripcion) && isset($stock) && isset($nombreArchivo) && isset($rutaTemporal)){   
+            
+            $rutaDestino = './Recursos/productPictures/' . $nombreArchivo . ".jpg";
+            move_uploaded_file($rutaTemporal, $rutaDestino);
+            
             try {
-                $sql = "INSERT INTO productos(nombreProducto,precioProducto,descProducto,cantidad) values ('$nombre','$precio','$descripcion','$stock')";
+                $sql = "INSERT INTO productos(nombreProducto,precioProducto,descProducto,cantidad,imagen) values ('$nombre','$precio','$descripcion','$stock','$rutaDestino')";
                 $conexion->query($sql);
             }catch (mysqli_sql_exception $e) {
                 echo  $e->getMessage();

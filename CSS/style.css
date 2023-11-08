@@ -1,33 +1,42 @@
-/* 
-    #A8E8F9
-    #00537A
-    #013C58
-    #F5A201
-    #FFBA42
-    #FFD35B
- */
+/* !PALETA DE COLORES
+#E9F5DB
+#CFE189
+#B5C99A
+#97A97C
+#87986A
+#718355 
+*/
  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Secular+One&display=swap');
+/* *LOGIN - REGISTER */
  body {
-    background-color: #fcd7a7f3;
+    background-color: #E9F5DB;
     font-family: 'Secular One', sans-serif;
  }
 .container {
     width: 30%;
-    border: 1px solid #00537A;
-    background-color: #00537A;
-    border-radius: 40px;
+    border: 1px solid #718355;
+    background-color: #718355;
+    border-radius: 20px;
     padding: 50px;
     margin-top: calc(50% - 45%);
-    box-shadow: 20px 20px 20px -8px #00537A;
+    box-shadow: 20px 20px 20px -8px #CFE189;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
 }
 #titulo {
     color:white;
-    border: 1px solid #FFBA42;
-    background-color: #FFBA42;
-    border-radius: 20px;
+    border: 1px solid #97A97C;
+    background-color: #97A97C;
+    border-radius: 15px;
     padding: 5px;
     text-align: center;
     width: 100%;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
 }
 .form-label {
     color: white;
@@ -38,8 +47,8 @@
     text-decoration: none;
     color:  #fff;
     padding: 15px;
-    border: 1px solid #0D3B66;
-    background-color: #0D3B66;
+    border: 1px solid #97A97C;
+    background-color: #97A97C;
     font-size: 20px;
     border-radius:15px;
     transition: all 1s;
@@ -50,8 +59,8 @@
     border-color: #FFBA42;
 }
 .form-control {
-    background-color: #013C58;
-    border: 1px solid #013C58;
+    background-color: #B5C99A;
+    border: 1px solid #B5C99A;
     color:white;
 }
 .error {
@@ -69,7 +78,7 @@
     border-radius: 25%;
 }
 #divPass img:hover {
-    background-color: #A8E8F9;
+    background-color: #CFE189;
 }
 input[type="contrasena"]{
     width: 80%;
@@ -94,7 +103,7 @@ span[id="und"]:hover {
     text-align: center;
 }
 .container-login {
-    background-color: #00537A;
+    background-color: #718355;
     position: fixed;
     z-index: 10;
     top: calc(50% - 25%);
