@@ -38,30 +38,31 @@
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
             <button class="register-btn" type="submit" id="btn-buscar"><img src="./Recursos/lupa.svg" alt=""></button>
         </form>
-        <a href="./zonaUsuario.php">Tu zona</a>
+        <a href="#">Tu zona</a>
         <a href="./subirFoto.php">Actualizar foto perfil</a>
         <?php if($_SESSION["usuario"] === "Admin") echo '<a href="./RegProductos.php">Subir Productos</a>' ?>
         <a href="#">Cesta <!-- TODO: cambiar por icono --></a>
         <button class="register-btn"><a href="./RegUsuarios.php" id="btn-a">Registrate</a></button>
         <button class="register-btn"><a href="./login.php" id="btn-a">Iniciar Sesion</a></button>
     </nav>
-    <div class="ppal-container">
-        
-                <?php
-                $sql = "SELECT * FROM productos";
+    <section class="datos-usuario">
+            <?php
+                $sql = "SELECT * FROM usuarios where usuario = '$usuario';";
                 $resultado = $conexion->query($sql);
 
                 while ($row = $resultado -> fetch_assoc()){               
-                    echo '<div class="prod-container">';
-                    ?>  <img src="<?php echo $row["imagen"]; ?>" alt="" width="250px" id="prod-img"><?php 
-                    echo "<h2>" . $row["nombreProducto"] . "</h2>";
-                    echo "<p id='prod-desc'>" . $row["descProducto"] . "</p>";
-                    echo "<p id='prod-precio'>" . $row["precioProducto"] . " €</p>";
+                    echo '<div class="container">';
+                    echo "<p>Nombre de Usuario: " . $row["usuario"] . "</p>";
+                    echo "<p id='prod-desc'>Nombre: " . $row["nombre"] . "</p>";
+                    echo "<p id='prod-precio'>Apellido: " . $row["apellidos"] . " </p>";
+                    echo "<p id='prod-precio'>Fecha de nacimiento: " . date("j-m-Y",strtotime($row["fechaNacimiento"])). " </p>";
                     echo "</div>";
                 }
-                ?>    
-        
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+            ?>   
+            <a href="#">Seguimiento de pedidos</a>
+            <a href="#">Historial de pedidos</a>
+            <a href="#">Datos de pago</a>
+            <a href="#">Datos de facturacion</a>
+    </section>
 </body>
 </html>
