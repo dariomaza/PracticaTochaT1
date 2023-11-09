@@ -40,7 +40,7 @@
         </form>
         <a href="#">Tu zona</a>
         <a href="./subirFoto.php">Actualizar foto perfil</a>
-        <a href="./RegProductos.php">Subir Productos</a>
+        <?php if($_SESSION["usuario"] === "Admin") echo '<a href="./RegProductos.php">Subir Productos</a>' ?>
         <a href="#">Cesta <!-- TODO: cambiar por icono --></a>
         <button class="register-btn"><a href="./RegUsuarios.php" id="btn-a">Registrate</a></button>
         <button class="register-btn"><a href="./login.php" id="btn-a">Iniciar Sesion</a></button>
