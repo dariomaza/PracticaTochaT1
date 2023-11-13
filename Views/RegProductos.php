@@ -93,7 +93,7 @@
     <?php
         if(isset($nombre) && isset($precio) && isset($descripcion) && isset($stock) && isset($nombreArchivo) && isset($rutaTemporal)){   
             
-            $rutaDestino = './Recursos/productPictures/' . $nombreArchivo . ".jpg";
+            $rutaDestino = './IMG/productPictures/' . $nombreArchivo . ".jpg";
             move_uploaded_file($rutaTemporal, $rutaDestino);
             
             try {

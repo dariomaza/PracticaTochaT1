@@ -81,6 +81,10 @@ nav  a:hover{
     grid-column: 2;
     grid-row: 4;
 }
+#prod-add {
+    grid-column: 3;
+    grid-row: 4;
+}
 .register-btn {
     text-decoration: none;
     color:  #fff;

@@ -20,7 +20,7 @@
                 $nombreArchivo = $_FILES['imagen']['name'];
                 $rutaTemporal = $_FILES['imagen']['tmp_name'];
     
-                $rutaDestino = './Recursos/profilePictures/' . $nombreArchivo;
+                $rutaDestino = './IMG/profilePictures/' . $nombreArchivo;
                 move_uploaded_file($rutaTemporal, $rutaDestino);
                 
                 $sql = "INSERT INTO fotosUsuarios (usuario, ruta) values ('$usuario','$rutaDestino')";

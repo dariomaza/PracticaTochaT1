@@ -18,7 +18,7 @@
             $resultado = $conexion->query($sql);
 
             if($resultado -> num_rows === 0){
-                $profile_img = "./Recursos/profileIcon.png";
+                $profile_img = "./IMG/profileIcon.png";
             } else {
                 while($fila = $resultado -> fetch_assoc()) {
                     $profile_img = $fila["ruta"];
@@ -28,7 +28,7 @@
             /* header("Location: RegUsuarios.php"); */
             $_SESSION["usuario"] = "invitado";
             $usuario = $_SESSION["usuario"];
-            $profile_img = "./Recursos/profileIcon.png";
+            $profile_img = "./IMG/profileIcon.png";
         }
     ?>
     <nav>
@@ -36,7 +36,7 @@
         <p>Bienvenido, <?php echo $usuario ?></p>
         <form class="d-flex" role="search">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="register-btn" type="submit" id="btn-buscar"><img src="./Recursos/lupa.svg" alt=""></button>
+            <button class="register-btn" type="submit" id="btn-buscar"><img src="./IMG/lupa.svg" alt=""></button>
         </form>
         <a href="./zonaUsuario.php">Tu zona</a>
         <a href="./subirFoto.php">Actualizar foto perfil</a>
@@ -58,7 +58,7 @@
                 echo "<p id='prod-precio'>" . $row["precioProducto"] . " €</p>"; ?>
                 <form action="" method="post">
                     <input type="hidden" name="idProducto" value="<?php echo $row["idProducto"]?>"><!--  //? Manda por el formulario el ID de cada uno de los productos -->
-                    <input type="submit" value="Añadir a cesta" class="register-btn">
+                    <input type="submit" value="Añadir a cesta" class="register-btn" id="prod-add">
                 </form>
                 <?php
                 echo "</div>";
