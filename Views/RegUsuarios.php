@@ -82,7 +82,7 @@
             <div class="mb-3" id="divPass">
                 <label for="contrasena" class="form-label">Contraseña: </label>
                 <input type="password" name="contrasena" id="contrasena"  class="form-control">
-                <img src="./Recursos/ojo.png" alt="" onclick='showPass()'>
+                <img src="./IMG/ojo.png" alt="" onclick='showPass()'>
             </div>
             <?php if(isset($err_contra)) echo '<p class="error">' . $err_contra.'</p>'; ?>
             <div class="mb-3">

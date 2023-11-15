@@ -38,31 +38,34 @@
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
             <button class="register-btn" type="submit" id="btn-buscar"><img src="./IMG/lupa.svg" alt=""></button>
         </form>
-        <a href="#">Tu zona</a>
+        <a href="./zonaUsuario.php">Tu zona</a>
         <a href="./subirFoto.php">Actualizar foto perfil</a>
         <?php if($_SESSION["usuario"] === "Admin") echo '<a href="./RegProductos.php">Subir Productos</a>' ?>
-        <a href="./cesta.php">Cesta <!-- TODO: cambiar por icono --></a>
+        <a href="./cesta.php" class="register-btn"><img src="./IMG/cesta.svg" alt="" width="30px"></a>
         <button class="register-btn"><a href="./RegUsuarios.php" id="btn-a">Registrate</a></button>
         <button class="register-btn"><a href="./login.php" id="btn-a">Iniciar Sesion</a></button>
     </nav>
-    <section class="datos-usuario">
-            <?php
-                $sql = "SELECT * FROM usuarios where usuario = '$usuario';";
-                $resultado = $conexion->query($sql);
+    <div>
+        <?php
+            $sql = "select productos.nombreProducto, productos.imagen, productos.precioProducto, productosCestas.cantidad from productosCestas join cestas join productos join usuarios where usuarios.usuario = '$usuario'";
+            $resultado = $conexion->query($sql);
 
-                while ($row = $resultado -> fetch_assoc()){               
-                    echo '<div class="container">';
-                    echo "<p>Nombre de Usuario: " . $row["usuario"] . "</p>";
-                    echo "<p id='prod-desc'>Nombre: " . $row["nombre"] . "</p>";
-                    echo "<p id='prod-precio'>Apellido: " . $row["apellidos"] . " </p>";
-                    echo "<p id='prod-precio'>Fecha de nacimiento: " . date("j-m-Y",strtotime($row["fechaNacimiento"])). " </p>";
-                    echo "</div>";
-                }
-            ?>   
-            <a href="#">Seguimiento de pedidos</a>
-            <a href="#">Historial de pedidos</a>
-            <a href="#">Datos de pago</a>
-            <a href="#">Datos de facturacion</a>
-    </section>
+            if($resultado -> num_rows === 0){
+                $err = "No hay prodcutos en la cesta";
+            } else {
+                echo '<table class="table table-primary">'; 
+                echo '<th><td>Imagen</td><td>Proudcto</td><td>Precio</td><td>Cantidad</td></th>';
+                while($fila = $resultado -> fetch_assoc()) {
+                    echo '<tr><td>'?> <img src="<?php echo $fila["imagen"]?>" alt=""> <?php echo '</td>';
+                    echo '<td>' . $fila["nombreProducto"]. '</td>';
+                    echo '<td>' . $fila["precioProducto"]. '</td>';
+                    echo '<td>' . $fila["cantidad"]. '</td></tr>';
+                }       
+                echo "</table>";
+            }
+
+        ?>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -14,6 +14,7 @@
             $salida = trim($salida);
             return $salida;
         }
+    
         if($_SERVER["REQUEST_METHOD"] == "POST"){
             $tempNombre = $_POST["nombre"];
             $tempPrecio = $_POST["precio"];
@@ -104,20 +105,7 @@
             }
         }
     ?>
-    <script>
-        function validarFormulario() {
-            var campoPrecio = document.querySelector('input[name="precio"]').value;
-            var campoNombre = document.querySelector('input[name="nombre"]').value;
-            var campoDescripcion = document.querySelector('input[name="descripcion"]').value;
-            var campoStock = document.querySelector('input[name="stock"').value;
-
-            if (campoNombre === '' || campoPrecio === '' || campoDescripcion === '' || campoStock === '') {
-                alert("No se admiten campos vacios");
-                return false;
-            }
-            return true;
-        }
-    </script>
+    <script src="./JS/validar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>

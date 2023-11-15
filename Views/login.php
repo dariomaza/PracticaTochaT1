@@ -21,7 +21,7 @@
             <div class="mb-3" id="divPass">
                 <label for="contrasena" class="form-label">Contraseña: </label>
                 <input type="password" name="contrasena" id="contrasena"  class="form-control">
-                <img src="./Recursos/ojo.png" alt="" onclick='showPass()'>
+                <img src="./IMG/ojo.png" alt="" onclick='showPass()'>
             </div>
             <input type="submit" value="Iniciar sesion" class="register-btn">
             <a href="./RegUsuarios.php" class="register-btn">Registrarse</a>
@@ -30,8 +30,7 @@
     <?php 
         if($_SERVER["REQUEST_METHOD"] == "POST"){
             $usuario = $_POST["usuario"];
-            $contrasena = $_POST["contrasena"]; //va a venir cifrada de la bbdd en la v2
-
+            $contrasena = $_POST["contrasena"]; 
             $sql = "SELECT * FROM usuarios where usuario = '$usuario'";
             $resultado = $conexion -> query($sql);
             if($resultado -> num_rows === 0){
@@ -39,6 +38,7 @@
             } else {
             while($fila = $resultado -> fetch_assoc()) {
                 $contrasena_cifrada = $fila["contrasena"];
+                $Rol = $fila["Rol"];
             }
             
             $acceso_valido = password_verify($contrasena, $contrasena_cifrada);
@@ -47,6 +47,7 @@
                 /* VARIABLES PERSISTENTES DURANTE TODA LA SESION EN LA PAGINA WEB */
                 session_start();
                 $_SESSION["usuario"] = $usuario;
+                $_SESSION["Rol"] = $Rol;
                 header("Location: principal.php");
             } else {
                 echo "El usuario y/o la contraseña no son validos";
@@ -56,18 +57,7 @@
 ?>
 
 
-    <script>
-        function validarFormulario() {
-            var campoUsuario = document.querySelector('input[name="usuario"]').value;
-            var campoContrasena = document.querySelector('input[name="contrasena"]').value;
-
-            if (campoUsuario === '' || campoContrasena === '' ) {
-                alert("No se admiten campos vacios");
-                return false;
-            }
-            return true;
-        }
-    </script>
+    <script src="./JS/validar.js"></script>
     <script src="./JS/showPass.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>

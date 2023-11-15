@@ -19,8 +19,8 @@ nav {
 } 
 nav > *{
     margin: 10px;
-    margin-top: 15px;
-    font-size: 26px;
+    margin-top: 25px;
+    font-size: 20px;
     text-decoration: none;
     color: #fff;
 }
@@ -119,4 +119,9 @@ nav #btn-buscar > img {
     -ms-transform: scaleX(-1);
     -o-transform: scaleX(-1);
     -webkit-transform: scaleX(-1);
+}
+.cesta {
+    grid-row: 4;
+    grid-column: 3;
+    margin: -20px 20px 35px -55px;
 }

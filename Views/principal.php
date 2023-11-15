@@ -16,6 +16,9 @@
             $usuario = $_SESSION["usuario"];
             $sql = "SELECT * FROM fotosUsuarios where usuario = '$usuario';";
             $resultado = $conexion->query($sql);
+            if(isset($_SESSION["Rol"])){
+                $rol = $_SESSION["Rol"];
+            }
 
             if($resultado -> num_rows === 0){
                 $profile_img = "./IMG/profileIcon.png";
@@ -29,7 +32,9 @@
             $_SESSION["usuario"] = "invitado";
             $usuario = $_SESSION["usuario"];
             $profile_img = "./IMG/profileIcon.png";
+            $rol = "invitado";
         }
+
     ?>
     <nav>
         <img src="<?php echo $profile_img ?>" alt="" id="profile-icon">
@@ -40,11 +45,34 @@
         </form>
         <a href="./zonaUsuario.php">Tu zona</a>
         <a href="./subirFoto.php">Actualizar foto perfil</a>
-        <?php if($_SESSION["usuario"] === "Admin") echo '<a href="./RegProductos.php">Subir Productos</a>' ?>
-        <a href="#">Cesta <!-- TODO: cambiar por icono --></a>
+        <?php if( $rol === "Admin") echo '<a href="./RegProductos.php">Subir Productos</a>' ?>
+        <a href="./cesta.php" class="register-btn"><img src="./IMG/cesta.svg" alt="" width="30px"></a>
         <button class="register-btn"><a href="./RegUsuarios.php" id="btn-a">Registrate</a></button>
         <button class="register-btn"><a href="./login.php" id="btn-a">Iniciar Sesion</a></button>
+        <button class="register-btn"><a href="../Util/cerrarSesion.php" id="btn-a">Cerrar Sesion</a></button>
     </nav>
+    <?php 
+        if($_SERVER["REQUEST_METHOD"] == "POST"){
+            if(isset($_POST["idProducto"])){
+                $idProducto = $_POST["idProducto"];
+                echo $idProducto;
+                $sql = "SELECT idCesta FROM cestas where usuario = '$usuario'";
+
+                $resultado = $conexion->query($sql);
+                
+                if($resultado -> num_rows === 0){
+                    $err = "";
+                } else {
+                    while($fila = $resultado -> fetch_assoc()) {
+                        $idCesta = $fila["idCesta"];
+                    }       
+                }
+                $sql = "INSERT INTO productosCestas (idProducto, idCesta, cantidad) VALUES ('$idProducto','$idCesta',1)";
+                $conexion->query($sql);
+
+            }
+        }
+    ?>
     <div class="ppal-container">
             <?php
             $sql = "SELECT * FROM productos";
@@ -56,9 +84,9 @@
                 echo "<h2>" . $row["nombreProducto"] . "</h2>";
                 echo "<p id='prod-desc'>" . $row["descProducto"] . "</p>";
                 echo "<p id='prod-precio'>" . $row["precioProducto"] . " €</p>"; ?>
-                <form action="" method="post">
-                    <input type="hidden" name="idProducto" value="<?php echo $row["idProducto"]?>"><!--  //? Manda por el formulario el ID de cada uno de los productos -->
-                    <input type="submit" value="Añadir a cesta" class="register-btn" id="prod-add">
+                <form action="" method="post" class="cesta">
+                    <input type="hidden" name="idProducto" value="<?php echo $row["idProducto"]?>">
+                    <button type="submit" class="register-btn"><img src="./IMG/cesta.svg" alt="" width="30px"></button><!--  //? Manda por el formulario el ID de cada uno de los productos -->
                 </form>
                 <?php
                 echo "</div>";

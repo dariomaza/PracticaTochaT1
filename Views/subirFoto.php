@@ -14,23 +14,25 @@
         $usuario = $_SESSION["usuario"];
 
         
-        if($usuario != "invitado"){
-            if (isset($_FILES['imagen'])) {
-            
-                $nombreArchivo = $_FILES['imagen']['name'];
-                $rutaTemporal = $_FILES['imagen']['tmp_name'];
-    
-                $rutaDestino = './IMG/profilePictures/' . $nombreArchivo;
-                move_uploaded_file($rutaTemporal, $rutaDestino);
+        if($_SERVER["REQUEST_METHOD"] == "POST"){
+            if($usuario != "invitado"){
+                if (isset($_FILES['imagen'])) {
                 
-                $sql = "INSERT INTO fotosUsuarios (usuario, ruta) values ('$usuario','$rutaDestino')";
-                $conexion->query($sql);
-    
-                $_SESSION["perfil"] = $rutaDestino;
-                header("location: principal.php");
+                    $nombreArchivo = $_FILES['imagen']['name'];
+                    $rutaTemporal = $_FILES['imagen']['tmp_name'];
+        
+                    $rutaDestino = './IMG/profilePictures/' . $nombreArchivo;
+                    move_uploaded_file($rutaTemporal, $rutaDestino);
+                    
+                    $sql = "INSERT INTO fotosUsuarios (usuario, ruta) values ('$usuario','$rutaDestino')";
+                    $conexion->query($sql);
+        
+                    $_SESSION["perfil"] = $rutaDestino;
+                    header("location: principal.php");
+                }
+            } else {
+                $err_updt = "Tienes que iniciar sesion para subir una imagen de perfil";
             }
-        } else {
-            $err_updt = "Tienes que iniciar sesion para subir una imagen de perfil";
         }
         
     ?>
