@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <?php  require '../Util/conexionTienda.php' ?>
+    <?php  require '../Util/producto.php' ?>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="./CSS/principalStyle.css">
 </head>
@@ -101,15 +102,16 @@
             while ($row = $resultado -> fetch_assoc()){               
                 echo '<div class="prod-container">';
                 ?>  <img src="<?php echo $row["imagen"]; ?>" alt="" width="250px" id="prod-img"><?php 
-                echo "<h2>" . $row["nombreProducto"] . "</h2>";
-                echo "<p id='prod-desc'>" . $row["descProducto"] . "</p>";
-                echo "<p id='prod-precio'>" . $row["precioProducto"] . " €</p>"; ?>
+                $producto = new Product($row["idProducto"], $row["nombreProducto"], $row["precioProducto"],$row["descProducto"],$row["cantidad"],$row["imagen"]);
+                echo "<h2>" . $producto->idProducto . "</h2>";
+                echo "<p id='prod-desc'>" . $producto->descripcion . "</p>";
+                echo "<p id='prod-precio'>" . $producto->precio . " €</p>"; ?>
                 <form action="" method="post" class="cesta">
-                    <input type="hidden" name="idProducto" value="<?php echo $row["idProducto"]?>">
+                    <input type="hidden" name="idProducto" value="<?php echo $producto->idProducto?>">
                     <div class="cantSel">
                         <p onclick="incrementar()">+</p>
-                        <input type="text" id="valor<?php echo  $row["idProducto"]?>" name="valor" readonly>
-                        <script>const document.getElementByID("valor<?php echo $row["idProducto"]?>>")</script>
+                        <input type="text" id="valor<?php echo  $producto->idProducto?>" name="valor" readonly>
+                        <script>const document.getElementByID("valor<?php echo $producto->idProducto ?>>")</script>
                         <p onclick="decrementar()">-</p>
                     </div>
                     <button type="submit" class="register-btn"><img src="./IMG/cesta.svg" alt="" width="30px"></button><!--  //? Manda por el formulario el ID de cada uno de los productos -->
