@@ -14,6 +14,7 @@
         if (isset($_SESSION["usuario"])){
             
             $usuario = $_SESSION["usuario"];
+            $rol  = $_SESSION["Rol"];
             $sql = "SELECT * FROM fotosUsuarios where usuario = '$usuario';";
             $resultado = $conexion->query($sql);
 
@@ -32,18 +33,21 @@
         }
     ?>
     <nav>
-        <img src="<?php echo $profile_img ?>" alt="" id="profile-icon">
-        <p>Bienvenido, <?php echo $usuario ?></p>
+        <div class="logo-ppal">
+            <a href="./principal.php"><img src="./IMG/logo.png" alt="" width="50px"></a>
+            <p>TIENDA</p>
+        </div>
         <form class="d-flex" role="search">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
             <button class="register-btn" type="submit" id="btn-buscar"><img src="./IMG/lupa.svg" alt=""></button>
         </form>
-        <a href="#">Tu zona</a>
-        <a href="./subirFoto.php">Actualizar foto perfil</a>
-        <?php if($_SESSION["usuario"] === "Admin") echo '<a href="./RegProductos.php">Subir Productos</a>' ?>
-        <a href="./cesta.php">Cesta <!-- TODO: cambiar por icono --></a>
+        <a href="./zonaUsuario.php"><img src="<?php echo $profile_img ?>" alt="" id="profile-icon"></a>
+        <p>Bienvenido, <?php echo $usuario ?></p>
+        <?php if( $rol === "Admin") echo '<a href="./RegProductos.php">Subir Productos</a>' ?>
+        <a href="./cesta.php" class="register-btn"><img src="./IMG/cesta.svg" alt="" width="30px"></a>
         <button class="register-btn"><a href="./RegUsuarios.php" id="btn-a">Registrate</a></button>
         <button class="register-btn"><a href="./login.php" id="btn-a">Iniciar Sesion</a></button>
+        <button class="register-btn"><a href="../Util/cerrarSesion.php" id="btn-a">Cerrar Sesion</a></button>
     </nav>
     <section class="datos-usuario">
             <?php
@@ -63,6 +67,7 @@
             <a href="#">Historial de pedidos</a>
             <a href="#">Datos de pago</a>
             <a href="#">Datos de facturacion</a>
+            <a href="./subirFoto.php">Actualizar foto perfil</a>
     </section>
 </body>
 </html>

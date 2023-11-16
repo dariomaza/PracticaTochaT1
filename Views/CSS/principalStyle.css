@@ -10,37 +10,69 @@
 body {
     background-color: #E9F5DB;
 }
-nav {
+ nav {
     display: flex;
     flex-direction: row;
-    padding: 0 auto;
     background-color: #718355;
-    height: 75px;
+    height: 80px;
+    width: 100%;
 } 
-nav > *{
+nav .logo-ppal {
+    display: flex;
+    flex-direction: row;
+    color: black;
+    width: 200px;
+    height: 80%;
+    background-color: #97A97C;
+    font-size: 25px;
+    font-weight: 800;
     margin: 10px;
-    margin-top: 25px;
-    font-size: 20px;
+    align-items: center;
+    border: 1px solid #000;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+} 
+nav .logo-ppal > * {
+    margin: 10px 0px;
+    padding: 10px;
+}
+nav #s-form {
+    width: 600px;
+    margin: 15px;
+    margin-left: 120px;
+}
+nav #aProd {
     text-decoration: none;
     color: #fff;
+    width: 150px;
+    font-size: 20px;
+    margin-top: 25px;
 }
-nav  a:hover{
+nav #aProd:hover{
     text-decoration: underline; 
     color: #FFBA42
 }
-
-#profile-icon {
-    width: 50px;
-    height: 50px;
+nav > p {
+    color: #fff;
+    font-size: 20px;
+    margin-top: 25px;
+    margin-right: 10px;
+}
+nav #profile-icon {
+    width: 60px;
+    height: 60px;
     border-radius: 50px;
     -webkit-border-radius: 50px;
     -moz-border-radius: 50px;
     -ms-border-radius: 50px;
     -o-border-radius: 50px;
-    margin: 15px;
 }
-.form-control {
-    width: 500px;
+nav .btns {
+    margin-top: 5px;
+    margin-left: 10px;
 }
 .ppal-container {
     display: flex;
@@ -124,4 +156,9 @@ nav #btn-buscar > img {
     grid-row: 4;
     grid-column: 3;
     margin: -20px 20px 35px -55px;
+    display: flex;
+    flex-direction: row;
+}
+.cantSel > input {
+    width: 50px;
 }

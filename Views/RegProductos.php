@@ -6,8 +6,18 @@
     <title>Registrar Productos</title>
     <?php  require '../Util/conexionTienda.php' ?>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="./CSS/principalStyle.css">
 </head>
 <body>
+    <?php
+        session_start();
+        $rol = $_SESSION["Rol"];
+        $usuario = $_SESSION["usuario"];
+        $profile_img = $_SESSION["imagen"];
+        if($rol != "Admin"){
+            header("Location: principal.php");
+        }
+    ?>
     <?php
         function depurar (string $entrada) : string {
             $salida = htmlspecialchars($entrada);
@@ -50,7 +60,6 @@
             }
             if(!isset($_FILES["imagen"])) $err_imgagen = "Es obligatorio subir una foto";
             else {
-                echo $_FILES["imagen"]["type"];
                 if($_FILES["imagen"]["type"] === "image/png" || $_FILES["imagen"]["type"] === "image/jpg" || $_FILES["imagen"]["type"] === "image/jpeg"){
                     if($_FILES["imagen"]["size"] >= (5e+6)) $err_imgagen = "El tamaño maximo de la imagen tiene que ser de 5 MegaBytes";
                     else {
@@ -61,31 +70,50 @@
             }
         }
     ?>
+    <nav>
+        <div class="logo-ppal">
+            <a href="./principal.php"><img src="./IMG/logo.png" alt="" width="50px"></a>
+            <p>TIENDA</p>
+        </div>
+        <form class="d-flex" role="search" id="s-form">
+            <input class="form-control me-2" type="search" disabled value="Search" aria-label="Search" >
+            <button class="register-btn" type="submit" id="btn-buscar"><img src="./IMG/lupa.svg" alt=""></button>
+        </form>
+        <?php if($rol === "Admin") echo '<a id="aProd" href="./RegProductos.php">Subir Productos</a>' ?>
+        <p>Bienvenido, <?php echo $usuario ?></p>
+        <div class="btns">
+            <a href="./zonaUsuario.php"><img src="<?php echo $profile_img ?>" alt="" id="profile-icon"></a>
+            <a href="./cesta.php" class="register-btn"><img src="./IMG/cesta.svg" alt="" width="30px"></a>
+            <button class="register-btn"><a href="./RegUsuarios.php" id="btn-a">Registrate</a></button>
+            <button class="register-btn"><a href="./login.php" id="btn-a">Iniciar Sesion</a></button>
+            <button class="register-btn"><a href="../Util/cerrarSesion.php" id="btn-a">Cerrar Sesion</a></button>
+        </div>
+    </nav>
     <div class="container">
         <h1>Registro de productos</h1>
         <form action="" method="post" onsubmit="return validarFormulario()" enctype="multipart/form-data">
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="floatingInput" name="nombre" placeholder="Nombre:">
+                <input type="text" class="form-control reg" id="floatingInput" name="nombre" placeholder="Nombre:">
                 <label for="floatingInput">Nombre del producto: </label>
                 <?php  if(isset($err_nombre)) echo '<p class="error">' . $err_nombre.'</p>'; ?>
             </div>
             <div class="form-floating mb-3">
-                <input type="number" class="form-control" id="floatingPrecio" placeholder="precio: " name="precio">
+                <input type="number" class="form-control reg" id="floatingPrecio" placeholder="precio: " name="precio">
                 <label for="floatingPrecio">Precio: </label>
                 <?php  if(isset($err_precio)) echo '<p class="error">' . $err_precio.'</p>'; ?>
             </div>
             <div class="form-floating mb-3">
-                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" name="descripcion"></textarea>
+                <textarea class="form-control reg" placeholder="Leave a comment here" id="floatingTextarea" name="descripcion"></textarea>
                 <label for="floatingTextarea" class="form-label" class="form-control">Descripcion del producto:</label>
                 <?php  if(isset($err_desc)) echo '<p class="error">' . $err_desc .'</p>'; ?>
             </div>
             <div class="form-floating mb-3">
-                <input type="number" class="form-control" id="stock" placeholder="stock: " name="stock">
+                <input type="number" class="form-control reg" id="stock" placeholder="stock: " name="stock">
                 <label for="stock">Cantidad en stock: </label>
                 <?php  if(isset($err_nombre)) echo '<p class="error">' . $err_nombre.'</p>'; ?>
             </div>
             <div class="form-floating mb-3">
-                <input type="file" name="imagen" id="imagen">
+                <input type="file" class="reg" name="imagen" id="imagen">
                 <?php  if(isset($err_imgagen)) echo '<p class="error">' . $err_imgagen.'</p>'; ?>
             </div>
             <input type="submit" value="Registrar" class="btn btn-primary">
