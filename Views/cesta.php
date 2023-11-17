@@ -25,6 +25,17 @@
                     $profile_img = $fila["ruta"];
                 }       
             }
+
+           if($usuario === "invitado"){
+                $warnCesta = "Inicia sesion para ver tu cesta";  
+           } else {
+                $sql = "SELECT idCesta FROM cestas where usuario = '$usuario';";
+                $resultadoCesta = $conexion->query($sql);
+
+                $CestaTMP = $resultadoCesta->fetch_assoc();
+                $idCesta = $CestaTMP['idCesta'];
+           }
+
         } else {
             /* header("Location: RegUsuarios.php"); */
             $_SESSION["usuario"] = "invitado";
@@ -53,36 +64,81 @@
     </nav>
     <div class="container">
         <?php
-            $sql = "SELECT p.imagen,  p.nombreProducto, p.precioProducto, pc.cantidad, pc.idProducto FROM productos p INNER JOIN productosCestas pc ON p.idProducto = pc.idProducto;";
-            $resultado = $conexion->query($sql);
+           if(isset($idCesta)){
+                $sql = "SELECT p.imagen,  p.nombreProducto, p.precioProducto, pc.cantidad, pc.idProducto FROM productos p INNER JOIN productosCestas pc ON p.idProducto = pc.idProducto where pc.idCesta = $idCesta";
+                $resultado = $conexion->query($sql);
 
-            if($resultado -> num_rows === 0){
-                $err = "No hay prodcutos en la cesta";
-            } else {
-                echo '<table class="table">'; 
-                echo '<tr><th></th><th>Proudcto</th><th>Precio</th><th>Cantidad</th><th>Precio total</th></tr>';
-                $totalCesta = 0;
-                while($fila = $resultado -> fetch_assoc()) {
-                    echo '<tr><td>'?> <img src="<?php echo $fila["imagen"]?>" alt=""> <?php echo '</td>';
-                    echo '<td>' . $fila["nombreProducto"]. '</td>';
-                    echo '<td>' . $fila["precioProducto"]. '</td>';
-                    echo '<td>' . $fila["cantidad"]. '</td>';
-                    
-                    $sql = "SELECT pc.cantidad * p.precioProducto AS total FROM productosCestas pc JOIN productos p ON pc.idProducto = p.idProducto where pc.idProducto = " . $fila['idProducto'];
-                    $resultado2 = $conexion->query($sql);
-                    $total =  $resultado2->fetch_assoc();
-                    $totalCesta += doubleval($total['total']);
-                    echo "<td>" . $total['total'] . "</td>";
-                }       
-                echo "</tr></table>";
-            }
+                if($resultado -> num_rows === 0){
+                    $err = "No hay productos en la cesta";
+                } else {
+                    echo '<table class="table">'; 
+                    echo '<tr><th></th><th>Proudcto</th><th>Precio</th><th>Cantidad</th><th>Precio total</th></tr>';
+                    $totalCesta = 0;
+                    while($fila = $resultado -> fetch_assoc()) {
+                        echo '<tr><td>'?> <img src="<?php echo $fila["imagen"]?>" alt="" width="300px"> <?php echo '</td>';
+                        echo '<td>' . $fila["nombreProducto"]. '</td>';
+                        echo '<td>' . $fila["precioProducto"]. '</td>';
+                        echo '<td>' . $fila["cantidad"]. '</td>';
+                        $idProd = $fila["idProducto"];
+                        
+                        $sql = "SELECT pc.cantidad * p.precioProducto AS total FROM productosCestas pc JOIN productos p ON pc.idProducto = p.idProducto where pc.idProducto = $idProd and pc.idCesta = $idCesta;";
+                        $resultado2 = $conexion->query($sql);
+                        $total =  $resultado2->fetch_assoc();
+                        $totalCesta += doubleval($total['total']);
+                        echo "<td>" . $total['total'] . "</td>";
+                    }       
+                    echo "</tr></table>";
+                }
+           }
 
         ?>
     </div>
-    <h2>Precio total de la cesta: <?php echo $totalCesta ?></h2>
+    <h2><?php if(isset($warnCesta)) echo $warnCesta ?></h2>
+    <h2><?php if(isset($totalCesta)) {
+            echo "El precio total de la cesta es: $totalCesta €";
+            $sql = "UPDATE cestas SET precio_total = $totalCesta WHERE idCesta = $idCesta;";
+            $conexion->query($sql);
+        } else echo "Tu cesta esta vacia " ?></h2>
     <form action="" method="POST">
-        <input type="submit" class="register-btn"value="Finalizar pedido">
+        <input type="submit" class="register-btn" id="pedido-btn" value="Finalizar pedido" <?php if($usuario == "invitado") echo "disabled" ?>>
+        <input type="hidden" name="f" value="f">
     </form>
+    <?php
+        if($_SERVER["REQUEST_METHOD"] == "POST"){
+            if(isset($_POST["f"])){
+                $sql = "INSERT INTO pedidos (usuario, precioTotal) VALUES ('$usuario','$totalCesta')";
+                $conexion->query($sql);
+
+
+                $sql = "SELECT idPedido FROM pedidos where usuario = '$usuario'";
+                $resultado = $conexion->query($sql);
+                $idPedidoTemp = $resultado->fetch_assoc();
+                $idPedido = $idPedidoTemp["idPedido"];
+                
+                $sql = "SELECT p.idProducto, p.precioProducto, pc.cantidad FROM productos AS p JOIN productosCestas AS pc ON p.idProducto = pc.idProducto WHERE pc.idCesta = $idCesta;";
+                $resultado = $conexion->query($sql);
+                
+                
+                $cont = 1;
+                while ($fila = $resultado->fetch_assoc()) {
+                    $idProducto = $fila["idProducto"];
+                    $precioUni = $fila["precioProducto"];
+                    $cantidad = $fila["cantidad"];
+                    /* $sql = "U"; */
+                    $sql = "INSERT INTO lineaspedidos (lineaPedido, idProducto, precioUnitario, cantidad, idPedido) VALUES ('$cont','$idProducto','$precioUni','$cantidad','$idPedido')";
+                    $conexion->query($sql);
+
+                    $cont++;
+                }
+
+                $sql = "DELETE FROM productosCestas WHERE idCesta = $idCesta;";
+                $conexion->query($sql);
+                $sql = "UPDATE cestas SET precio_total = 0 WHERE idCesta = $idCesta;";
+                $conexion->query($sql);
+            }
+        }
+        
+    ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>

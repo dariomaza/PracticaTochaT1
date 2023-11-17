@@ -40,7 +40,7 @@ nav .logo-ppal > * {
     padding: 10px;
 }
 nav #s-form {
-    width: 600px;
+    width: 500px;
     margin: 15px;
     margin-left: 120px;
 }
@@ -74,6 +74,22 @@ nav .btns {
     margin-top: 5px;
     margin-left: 10px;
 }
+#btn-buscar {
+    margin-top: 0px;
+    height: 50px;
+
+}
+nav #btn-buscar > img {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 30px;
+    margin-top: -5px;
+    transform: scaleX(-1);
+    -moz-transform: scaleX(-1);
+    -ms-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+}
 .ppal-container {
     display: flex;
     flex-direction: row;
@@ -94,6 +110,25 @@ nav .btns {
     -ms-border-radius: 10px;
     -o-border-radius: 10px;
 } 
+.register-btn {
+    text-decoration: none;
+    color:  #fff;
+    padding: 15px;
+    border: 1px solid #97A97C;
+    background-color: #97A97C;
+    font-size: 20px;
+    border-radius:15px;
+    transition: all 1s;
+    margin: 5px;
+}
+.register-btn:hover{
+    background-color: #FFBA42;
+    border-color: #FFBA42;
+} 
+.register-btn:disabled{
+    opacity: 0.6;
+    background-color: #97A97C;
+}
 #prod-img {
     grid-column: 2;
     grid-row: 2;
@@ -117,48 +152,23 @@ nav .btns {
     grid-column: 3;
     grid-row: 4;
 }
-.register-btn {
-    text-decoration: none;
-    color:  #fff;
-    padding: 15px;
-    border: 1px solid #97A97C;
-    background-color: #97A97C;
-    font-size: 20px;
-    border-radius:15px;
-    transition: all 1s;
-    margin: 5px;
-}
-.register-btn:hover{
-    background-color: #FFBA42;
-    border-color: #FFBA42;
-} 
+
 #btn-a {
     color: white;
     text-decoration: none;
 }
-#btn-buscar {
-    margin-top: 0px;
-    height: 50px;
-
-}
-nav #btn-buscar > img {
-    width: 30px;
-    height: 30px;
-    margin-bottom: 30px;
-    margin-top: -5px;
-    transform: scaleX(-1);
-    -moz-transform: scaleX(-1);
-    -ms-transform: scaleX(-1);
-    -o-transform: scaleX(-1);
-    -webkit-transform: scaleX(-1);
-}
 .cesta {
     grid-row: 4;
     grid-column: 3;
-    margin: -20px 20px 35px -55px;
+    margin: -20px 10px 35px -120px;
     display: flex;
     flex-direction: row;
 }
-.cantSel > input {
-    width: 50px;
+.cesta > .form-select {
+    margin-top: 15px;
+    border-color: #000;
+    color:black;
+    background-color: #97A97C;
+    width: 100px;
+    height: 50px;
 }

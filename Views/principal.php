@@ -17,8 +17,12 @@
             $usuario = $_SESSION["usuario"];
             $sql = "SELECT * FROM fotosUsuarios where usuario = '$usuario';";
             $resultado = $conexion->query($sql);
+            
             if(isset($_SESSION["Rol"])){
                 $rol = $_SESSION["Rol"];
+            } else {
+                $rol = "cliente";
+                $_SESSION["Rol"] = $rol;
             }
 
             if($resultado -> num_rows === 0){
@@ -26,16 +30,15 @@
             } else {
                 while($fila = $resultado -> fetch_assoc()) {
                     $profile_img = $fila["ruta"];
-                    $_SESSION["imagen"] = $profile_img;
                 }       
             }
         } else {
-            /* header("Location: RegUsuarios.php"); */
             $_SESSION["usuario"] = "invitado";
             $usuario = $_SESSION["usuario"];
             $profile_img = "./IMG/profileIcon.png";
-            $rol = "invitado";
+            $rol = "cliente";
         }
+        $_SESSION["imagen"] = $profile_img;
 
     ?>
     <nav>
@@ -45,10 +48,10 @@
         </div>
         <form class="d-flex" role="search" id="s-form">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="register-btn" type="submit" id="btn-buscar"><img src="./IMG/lupa.svg" alt=""></button>
+            <button class="register-btn" id="btn-buscar"><img src="./IMG/lupa.svg" alt=""></button>
         </form>
         <?php if($rol === "Admin") echo '<a id="aProd" href="./RegProductos.php">Subir Productos</a>' ?>
-        <p>Bienvenido, <?php echo $usuario ?></p>
+        <p>Estas logeado como: <?php echo $usuario ?></p>
         <div class="btns">
             <a href="./zonaUsuario.php"><img src="<?php echo $profile_img ?>" alt="" id="profile-icon"></a>
             <a href="./cesta.php" class="register-btn"><img src="./IMG/cesta.svg" alt="" width="30px"></a>
@@ -61,6 +64,7 @@
         if($_SERVER["REQUEST_METHOD"] == "POST"){
             if(isset($_POST["idProducto"])){
                 $idProducto = $_POST["idProducto"];
+                $tmpCantidad = $_POST["cantidad"];
                 $sql = "SELECT idCesta FROM cestas where usuario = '$usuario'";
 
                 $resultado = $conexion->query($sql);
@@ -73,22 +77,23 @@
                     }       
                 }
 
-                $sql = "SELECT EXISTS(SELECT 1 FROM productosCestas WHERE idProducto = '$idProducto')";
-                $resultado = $conexion->query($sql);
-                $existe = mysqli_fetch_row($resultado)[0];
-
-                if($existe){
-                    $sql = "SELECT cantidad FROM productosCestas WHERE idProducto = '$idProducto'";
+                if(isset($idCesta)){
+                    $sql = "SELECT EXISTS(SELECT 1 FROM productosCestas WHERE idProducto = '$idProducto' and idCesta = '$idCesta')";
                     $resultado = $conexion->query($sql);
+                    $existe = mysqli_fetch_row($resultado)[0];
 
-                    $cantidad = mysqli_fetch_row($resultado)[0];
-                    $nuevaCant =  $cantidad + 1;
+                    if($existe){
+                        $sql = "SELECT cantidad FROM productosCestas WHERE idProducto = '$idProducto'";
+                        $resultado = $conexion->query($sql);
+                        $cantidad = mysqli_fetch_row($resultado)[0];
+                        $nuevaCant =  $cantidad + $tmpCantidad;
 
-                    $sql = "UPDATE productosCestas SET cantidad = '$nuevaCant' WHERE idProducto = '$idProducto'";
-                    $conexion->query($sql);
-                } else {
-                    $sql = "INSERT INTO productosCestas (idProducto, idCesta, cantidad) VALUES ('$idProducto','$idCesta',1)";
-                    $conexion->query($sql);
+                        $sql = "UPDATE productosCestas SET cantidad = '$nuevaCant' WHERE idProducto = '$idProducto' and idCesta = '$idCesta'";
+                        $conexion->query($sql);
+                    } else {
+                        $sql = "INSERT INTO productosCestas (idProducto, idCesta, cantidad) VALUES ('$idProducto','$idCesta',$tmpCantidad)";
+                        $conexion->query($sql);
+                    }
                 }
 
             }
@@ -103,17 +108,18 @@
                 echo '<div class="prod-container">';
                 ?>  <img src="<?php echo $row["imagen"]; ?>" alt="" width="250px" id="prod-img"><?php 
                 $producto = new Product($row["idProducto"], $row["nombreProducto"], $row["precioProducto"],$row["descProducto"],$row["cantidad"],$row["imagen"]);
-                echo "<h2>" . $producto->idProducto . "</h2>";
+                echo "<h2>" . $producto->nombreProducto . "</h2>";
                 echo "<p id='prod-desc'>" . $producto->descripcion . "</p>";
-                echo "<p id='prod-precio'>" . $producto->precio . " €</p>"; ?>
+                echo "<p id='prod-precio'>" . $producto->precio . " € <br>Stock: ". $producto->cantidad ."</p>"; ?>
                 <form action="" method="post" class="cesta">
-                    <input type="hidden" name="idProducto" value="<?php echo $producto->idProducto?>">
-                    <div class="cantSel">
-                        <p onclick="incrementar()">+</p>
-                        <input type="text" id="valor<?php echo  $producto->idProducto?>" name="valor" readonly>
-                        <script>const document.getElementByID("valor<?php echo $producto->idProducto ?>>")</script>
-                        <p onclick="decrementar()">-</p>
-                    </div>
+                    <input type="hidden" name="idProducto" value="<?php echo $row["idProducto"] ?>">
+                    <select class="form-select" name="cantidad" id="cantSel">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
                     <button type="submit" class="register-btn"><img src="./IMG/cesta.svg" alt="" width="30px"></button><!--  //? Manda por el formulario el ID de cada uno de los productos -->
                 </form>
                 <?php
@@ -121,26 +127,6 @@
             }
             ?>    
     </div>
-    <script>
-        let valor = 1;
-
-        function actualizarValor() {
-            document.getElementById('valor' + '1').value = valor;
-        }
-        
-
-        function incrementar() {
-            valor++;
-            actualizarValor();
-        }
-
-        function decrementar() {
-            if (valor > 1) {
-                valor--;
-                actualizarValor();
-            }
-        }
-    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>
