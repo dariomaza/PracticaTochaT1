@@ -1,5 +1,4 @@
-create schema tienda;
-use tienda;
+
 
 create table productos(
 	idProducto int auto_increment primary key,
@@ -10,7 +9,7 @@ create table productos(
     imagen varchar(200) not null
 );
 
-select * from productos;
+
 
 CREATE TABLE usuarios (
 	idUsuario int auto_increment primary key,
@@ -22,7 +21,7 @@ CREATE TABLE usuarios (
     Rol varchar(20) default 'cliente'
 );
 
-select * from usuarios;
+
 create table fotosUsuarios (
 	idFoto int auto_increment primary key,
     usuario varchar(12),
@@ -30,7 +29,7 @@ create table fotosUsuarios (
     constraint pk_fotosUsuarios_usuario foreign key (usuario) references usuarios(usuario)
 );
 
-select * from fotosUsuarios;
+
 
 CREATE TABLE cestas (
     idCesta INT AUTO_INCREMENT PRIMARY KEY,
@@ -38,9 +37,6 @@ CREATE TABLE cestas (
     precio_total numeric(8,2) DEFAULT 0,
     constraint pk_cestas_usuario foreign key (usuario) references usuarios(usuario)
 );
-select * from cestas;
-
-
 
 create table productosCestas (
 	idProducto INT,
@@ -50,16 +46,23 @@ create table productosCestas (
     constraint fk_productosCestas_productos foreign key (idProducto) references productos(idProducto),
     constraint fk_productosCestas_cestas foreign key (idCesta) references cestas(idCesta)
 );
-select * from productosCestas;
-SELECT 
-    pc.cantidad * p.precioProducto AS total
-FROM 
-    productosCestas pc
-JOIN 
-    productos p ON pc.idProducto = p.idProducto where pc.idProducto = 1;
-    
-SELECT p.imagen,  p.nombreProducto, p.precioProducto, pc.cantidad, pc.idProducto FROM productos p INNER JOIN productosCestas pc ON p.idProducto = pc.idProducto;
 
-select * from cestas;
-UPDATE productosCestas SET 4 WHERE idProducto = 1;
-SELECT p.imagen,  p.nombreProducto, p.precioProducto, pc.cantidad FROM productos p INNER JOIN productosCestas pc ON p.idProducto = pc.idProducto;
+CREATE TABLE pedidos (
+    idPedido INT AUTO_INCREMENT PRIMARY KEY,
+    usuario varchar(12),
+    precioTotal FLOAT(10,2),
+    fechaPedido TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (usuario) REFERENCES usuarios(usuario)
+);
+
+CREATE TABLE LineasPedidos (
+    lineaPedido INT,
+    idProducto INT,
+    precioUnitario FLOAT(10,2),
+    cantidad INT,
+    idPedido INT,
+    FOREIGN KEY (idProducto) REFERENCES productos(idProducto),
+    FOREIGN KEY (idPedido) REFERENCES pedidos(idPedido)
+);
+
+
