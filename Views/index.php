@@ -53,7 +53,7 @@
         <?php if($rol === "Admin") echo '<a id="aProd" href="./RegProductos.php">Subir Productos</a>' ?>
         <p>Estas logeado como: <?php echo $usuario ?></p>
         <div class="btns">
-            <a href="./zonaUsuario.php"><img src="<?php echo $profile_img ?>" alt="" id="profile-icon"></a>
+        <a href="./zonaUsuario.php" title="Zona de Usuario"><img src="<?php echo $profile_img ?>" alt="" id="profile-icon"></a>
             <a href="./cesta.php" class="register-btn"><img src="./IMG/cesta.svg" alt="" width="30px"></a>
             <button class="register-btn"><a href="./RegUsuarios.php" id="btn-a">Registrate</a></button>
             <button class="register-btn"><a href="./login.php" id="btn-a">Iniciar Sesion</a></button>
@@ -110,7 +110,12 @@
                 $producto = new Product($row["idProducto"], $row["nombreProducto"], $row["precioProducto"],$row["descProducto"],$row["cantidad"],$row["imagen"]);
                 echo "<h2>" . $producto->nombreProducto . "</h2>";
                 echo "<p id='prod-desc'>" . $producto->descripcion . "</p>";
-                echo "<p id='prod-precio'>" . $producto->precio . " € <br>Stock: ". $producto->cantidad ."</p>"; ?>
+                echo "<p id='prod-precio'>" . $producto->precio . " € <br>Stock: ". $producto->cantidad ."</p>";
+                if($producto->cantidad <= 0) {
+                    echo '<p id="offStock">Articulo agotado</p>';
+                }
+                ?>
+                
                 <form action="" method="post" class="cesta">
                     <input type="hidden" name="idProducto" value="<?php echo $row["idProducto"] ?>">
                     <select class="form-select" name="cantidad" id="cantSel">

@@ -152,6 +152,12 @@ nav #btn-buscar > img {
     grid-column: 3;
     grid-row: 4;
 }
+#offStock {
+    grid-column: 2;
+    grid-row: 4;
+    margin-top: 45px;
+    color: #ff0000;
+}
 
 #btn-a {
     color: white;
@@ -171,4 +177,51 @@ nav #btn-buscar > img {
     background-color: #97A97C;
     width: 100px;
     height: 50px;
+}
+/** DATOS USUARIO (zonaUsuario.php)  */
+.datos-usuario {
+    background-color: #718355;
+    font-size: 20px;
+    color: #fff;
+    width: 700px;
+    height: 400px;
+    border: 5px #fff solid;
+    border-radius: 25px;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    -ms-border-radius: 25px;
+    -o-border-radius: 25px;
+    padding: 15px;
+    margin-top: 50px;
+}
+.datos-usuario .container {
+    border: 1px solid #fff;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+}
+.datos-usuario .enlaces{
+    display: flex;
+    flex-flow: row wrap;
+}
+.datos-usuario .enlaces a {
+    color: #fff;
+    text-decoration: none;
+    background-color: #97A97C;
+    border: #97A97C solid 1px;
+    padding: 5px;
+    margin: 15px;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+.datos-usuario .enlaces a:hover {
+    background-color: #FFBA42;
+    border-color: #FFBA42;
 }

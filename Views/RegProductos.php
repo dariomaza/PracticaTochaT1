@@ -15,7 +15,7 @@
         $usuario = $_SESSION["usuario"];
         $profile_img = $_SESSION["imagen"];
         if($rol != "Admin"){
-            header("Location: principal.php");
+            header("Location: index.php");
         }
     ?>
     <?php
@@ -72,7 +72,7 @@
     ?>
     <nav>
         <div class="logo-ppal">
-            <a href="./principal.php"><img src="./IMG/logo.png" alt="" width="50px"></a>
+            <a href="./index.php"><img src="./IMG/logo.png" alt="" width="50px"></a>
             <p>TIENDA</p>
         </div>
         <form class="d-flex" role="search" id="s-form">
@@ -82,7 +82,7 @@
         <?php if($rol === "Admin") echo '<a id="aProd" href="./RegProductos.php">Subir Productos</a>' ?>
         <p>Bienvenido, <?php echo $usuario ?></p>
         <div class="btns">
-            <a href="./zonaUsuario.php"><img src="<?php echo $profile_img ?>" alt="" id="profile-icon"></a>
+        <a href="./zonaUsuario.php" title="Zona de Usuario"><img src="<?php echo $profile_img ?>" alt="" id="profile-icon"></a>
             <a href="./cesta.php" class="register-btn"><img src="./IMG/cesta.svg" alt="" width="30px"></a>
             <button class="register-btn"><a href="./RegUsuarios.php" id="btn-a">Registrate</a></button>
             <button class="register-btn"><a href="./login.php" id="btn-a">Iniciar Sesion</a></button>

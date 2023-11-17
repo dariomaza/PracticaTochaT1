@@ -37,7 +37,7 @@ CREATE TABLE cestas (
     precio_total numeric(8,2) DEFAULT 0,
     constraint pk_cestas_usuario foreign key (usuario) references usuarios(usuario)
 );
-
+use tienda;
 create table productosCestas (
 	idProducto INT,
     idCesta INT,

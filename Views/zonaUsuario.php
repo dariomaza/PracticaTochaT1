@@ -42,7 +42,7 @@
     ?>
     <nav>
         <div class="logo-ppal">
-            <a href="./principal.php"><img src="./IMG/logo.png" alt="" width="50px"></a>
+            <a href="./index.php"><img src="./IMG/logo.png" alt="" width="50px"></a>
             <p>TIENDA</p>
         </div>
         <form class="d-flex" role="search" id="s-form">
@@ -52,14 +52,14 @@
         <?php if($rol === "Admin") echo '<a id="aProd" href="./RegProductos.php">Subir Productos</a>' ?>
         <p>Estas logeado como: <?php echo $usuario ?></p>
         <div class="btns">
-            <a href="./zonaUsuario.php"><img src="<?php echo $profile_img ?>" alt="" id="profile-icon"></a>
+            <a href="./zonaUsuario.php" title="Zona de Usuario"><img src="<?php echo $profile_img ?>" alt="" id="profile-icon"></a>
             <a href="./cesta.php" class="register-btn"><img src="./IMG/cesta.svg" alt="" width="30px"></a>
             <button class="register-btn"><a href="./RegUsuarios.php" id="btn-a">Registrate</a></button>
             <button class="register-btn"><a href="./login.php" id="btn-a">Iniciar Sesion</a></button>
             <button class="register-btn"><a href="../Util/cerrarSesion.php" id="btn-a">Cerrar Sesion</a></button>
         </div>
     </nav>
-    <section class="datos-usuario">
+    <section class="container datos-usuario">
             <?php
                 $sql = "SELECT * FROM usuarios where usuario = '$usuario';";
                 $resultado = $conexion->query($sql);
@@ -73,11 +73,13 @@
                     echo "</div>";
                 }
             ?>   
-            <a href="#">Seguimiento de pedidos</a>
-            <a href="#">Historial de pedidos</a>
-            <a href="#">Datos de pago</a>
-            <a href="#">Datos de facturacion</a>
-            <a href="./subirFoto.php">Actualizar foto perfil</a>
+            <div class="enlaces">
+                <a href="#" title="En construccion" disabled>Seguimiento de pedidos</a>
+                <a href="#" title="En construccion" disabled>Historial de pedidos</a>
+                <a href="#" title="En construccion" disabled>Datos de pago</a>
+                <a href="#" title="En construccion" disabled>Datos de facturacion</a>
+                <a href="./subirFoto.php">Actualizar foto perfil</a>
+            </div>
     </section>
 </body>
 </html>

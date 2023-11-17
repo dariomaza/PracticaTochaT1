@@ -48,7 +48,7 @@
                 session_start();
                 $_SESSION["usuario"] = $usuario;
                 $_SESSION["Rol"] = $Rol;
-                header("Location: principal.php");
+                header("Location: index.php");
             } else {
                 echo "El usuario y/o la contraseña no son validos";
             }

@@ -45,7 +45,7 @@
     ?>
     <nav>
         <div class="logo-ppal">
-            <a href="./principal.php"><img src="./IMG/logo.png" alt="" width="50px"></a>
+            <a href="./index.php"><img src="./IMG/logo.png" alt="" width="50px"></a>
             <p>TIENDA</p>
         </div>
         <form class="d-flex" role="search" id="s-form">
@@ -55,7 +55,7 @@
         <?php if($rol === "Admin") echo '<a id="aProd" href="./RegProductos.php">Subir Productos</a>' ?>
         <p>Bienvenido, <?php echo $usuario ?></p>
         <div class="btns">
-            <a href="./zonaUsuario.php"><img src="<?php echo $profile_img ?>" alt="" id="profile-icon"></a>
+        <a href="./zonaUsuario.php" title="Zona de Usuario"><img src="<?php echo $profile_img ?>" alt="" id="profile-icon"></a>
             <a href="./cesta.php" class="register-btn"><img src="./IMG/cesta.svg" alt="" width="30px"></a>
             <button class="register-btn"><a href="./RegUsuarios.php" id="btn-a">Registrate</a></button>
             <button class="register-btn"><a href="./login.php" id="btn-a">Iniciar Sesion</a></button>
@@ -119,12 +119,16 @@
                 $resultado = $conexion->query($sql);
                 
                 
+                
                 $cont = 1;
                 while ($fila = $resultado->fetch_assoc()) {
                     $idProducto = $fila["idProducto"];
                     $precioUni = $fila["precioProducto"];
                     $cantidad = $fila["cantidad"];
-                    /* $sql = "U"; */
+
+                    $alterProds = "UPDATE productos SET cantidad = (cantidad - $cantidad) WHERE idProducto = $idProducto;";
+                    $conexion->query($alterProds); /* //! Cuando el usuario realiza el pedido se resta la cantidad comprada a stock total del producto */
+
                     $sql = "INSERT INTO lineaspedidos (lineaPedido, idProducto, precioUnitario, cantidad, idPedido) VALUES ('$cont','$idProducto','$precioUni','$cantidad','$idPedido')";
                     $conexion->query($sql);
 

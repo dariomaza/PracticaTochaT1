@@ -28,7 +28,7 @@
                     $conexion->query($sql);
         
                     $_SESSION["perfil"] = $rutaDestino;
-                    header("location: principal.php");
+                    header("location: index.php");
                 }
             } else {
                 $err_updt = "Tienes que iniciar sesion para subir una imagen de perfil";
