@@ -1,0 +1,1 @@
+he dejado este archivo aqui para que no haya ninguna foto y la carpeta se suba al github, si esta esta vacia no se sube y da error

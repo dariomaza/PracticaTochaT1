@@ -19,7 +19,7 @@
     border-radius: 20px;
     padding: 50px;
     margin-top: calc(50% - 45%);
-    box-shadow: 20px 20px 20px -8px #CFE189;
+    box-shadow: 20px 20px 20px -8px #616161;
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
     -ms-border-radius: 20px;
@@ -40,7 +40,6 @@
 }
 .form-label {
     color: white;
-    text-decoration: underline #FFBA42 2px;
     font-size: 20px;
 }
 .register-btn {

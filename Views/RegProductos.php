@@ -61,7 +61,7 @@
             if(!isset($_FILES["imagen"])) $err_imgagen = "Es obligatorio subir una foto";
             else {
                 if($_FILES["imagen"]["type"] === "image/png" || $_FILES["imagen"]["type"] === "image/jpg" || $_FILES["imagen"]["type"] === "image/jpeg"){
-                    if($_FILES["imagen"]["size"] >= (5e+6)) $err_imgagen = "El tamaño maximo de la imagen tiene que ser de 5 MegaBytes";
+                    if($_FILES["imagen"]["size"] >= (1e+6)) $err_imgagen = "El tamaño maximo de la imagen tiene que ser de 1 MegaByte";
                     else {
                         $nombreArchivo = $_FILES['imagen']['name'];
                         $rutaTemporal = $_FILES['imagen']['tmp_name'];
@@ -80,7 +80,7 @@
             <button class="register-btn" type="submit" id="btn-buscar"><img src="./IMG/lupa.svg" alt=""></button>
         </form>
         <?php if($rol === "Admin") echo '<a id="aProd" href="./RegProductos.php">Subir Productos</a>' ?>
-        <p>Bienvenido, <?php echo $usuario ?></p>
+        <p>Estas logeado como: <?php echo $usuario ?></p>
         <div class="btns">
         <a href="./zonaUsuario.php" title="Zona de Usuario"><img src="<?php echo $profile_img ?>" alt="" id="profile-icon"></a>
             <a href="./cesta.php" class="register-btn"><img src="./IMG/cesta.svg" alt="" width="30px"></a>

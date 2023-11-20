@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Tu cesta || Tienda</title>
     <?php  require '../Util/conexionTienda.php' ?>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="./CSS/principalStyle.css">
@@ -14,7 +14,10 @@
         if (isset($_SESSION["usuario"])){
             
             $usuario = $_SESSION["usuario"];
-            $rol = $_SESSION["Rol"];
+
+            if(isset($_SESSION["Rol"])) $rol = $_SESSION["Rol"];
+            else $rol = "usuario";
+            
             $sql = "SELECT * FROM fotosUsuarios where usuario = '$usuario';";
             $resultado = $conexion->query($sql);
 
@@ -40,7 +43,7 @@
             /* header("Location: RegUsuarios.php"); */
             $_SESSION["usuario"] = "invitado";
             $usuario = $_SESSION["usuario"];
-            $profile_img = "./IMG/profileIcon.png";
+    
         }
     ?>
     <nav>
@@ -53,7 +56,7 @@
             <button class="register-btn" type="submit" id="btn-buscar"><img src="./IMG/lupa.svg" alt=""></button>
         </form>
         <?php if($rol === "Admin") echo '<a id="aProd" href="./RegProductos.php">Subir Productos</a>' ?>
-        <p>Bienvenido, <?php echo $usuario ?></p>
+        <p>Estas logeado como: <?php echo $usuario ?></p>
         <div class="btns">
         <a href="./zonaUsuario.php" title="Zona de Usuario"><img src="<?php echo $profile_img ?>" alt="" id="profile-icon"></a>
             <a href="./cesta.php" class="register-btn"><img src="./IMG/cesta.svg" alt="" width="30px"></a>

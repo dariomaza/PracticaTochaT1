@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Pagina principal || Tienda</title>
     <?php  require '../Util/conexionTienda.php' ?>
     <?php  require '../Util/producto.php' ?>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="./CSS/principalStyle.css">
+    <link rel="shortcut icon" href="./IMG/logo.png" type="image/x-icon">
 </head>
 <body>
     <?php 
@@ -43,7 +44,7 @@
     ?>
     <nav>
         <div class="logo-ppal">
-            <a href="./principal.php"><img src="./IMG/logo.png" alt="" width="50px"></a>
+            <a href="./index.php"><img src="./IMG/logo.png" alt="" width="50px"></a>
             <p>TIENDA</p>
         </div>
         <form class="d-flex" role="search" id="s-form">
@@ -111,7 +112,9 @@
                 echo "<h2>" . $producto->nombreProducto . "</h2>";
                 echo "<p id='prod-desc'>" . $producto->descripcion . "</p>";
                 echo "<p id='prod-precio'>" . $producto->precio . " € <br>Stock: ". $producto->cantidad ."</p>";
-                if($producto->cantidad <= 0) {
+                if($producto->cantidad <= 0) {  ?>
+                    <script> document.getElementsByClassName("prod-container")</script>
+                    <?php
                     echo '<p id="offStock">Articulo agotado</p>';
                 }
                 ?>
