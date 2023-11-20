@@ -2,14 +2,14 @@
     class Product{
         public int $idProducto;
         public string $nombreProducto;
-        public int $precio;
+        public float $precio;
         public string $descripcion;
         public int $cantidad;
         public string $imagen;
 
         function __construct(int $idProducto,
                             string $nombreProducto,
-                            int $precio,
+                            float $precio,
                             string $descripcion,
                             int $cantidad,
                             string $imagen){

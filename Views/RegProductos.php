@@ -98,7 +98,7 @@
                 <?php  if(isset($err_nombre)) echo '<p class="error">' . $err_nombre.'</p>'; ?>
             </div>
             <div class="form-floating mb-3">
-                <input type="number" class="form-control reg" id="floatingPrecio" placeholder="precio: " name="precio">
+                <input type="number" class="form-control reg" id="floatingPrecio" placeholder="precio: " name="precio" step="0.01">
                 <label for="floatingPrecio">Precio: </label>
                 <?php  if(isset($err_precio)) echo '<p class="error">' . $err_precio.'</p>'; ?>
             </div>

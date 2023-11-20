@@ -106,14 +106,16 @@
             $resultado = $conexion->query($sql);
 
             while ($row = $resultado -> fetch_assoc()){               
-                echo '<div class="prod-container">';
-                ?>  <img src="<?php echo $row["imagen"]; ?>" alt="" width="250px" id="prod-img"><?php 
+                echo '<div class="prod-container" id="prod">';
+                ?>  <img src="<?php echo $row["imagen"]; ?>" alt="" width="250px" height="10px" id="prod-img"><?php 
                 $producto = new Product($row["idProducto"], $row["nombreProducto"], $row["precioProducto"],$row["descProducto"],$row["cantidad"],$row["imagen"]);
                 echo "<h2>" . $producto->nombreProducto . "</h2>";
                 echo "<p id='prod-desc'>" . $producto->descripcion . "</p>";
                 echo "<p id='prod-precio'>" . $producto->precio . " € <br>Stock: ". $producto->cantidad ."</p>";
                 if($producto->cantidad <= 0) {  ?>
-                    <script> document.getElementsByClassName("prod-container")</script>
+                    <script> 
+                        document.getElementById("prod").style.opacity = 0.4; 
+                    </script>
                     <?php
                     echo '<p id="offStock">Articulo agotado</p>';
                 }
@@ -128,7 +130,7 @@
                         <option value="4">4</option>
                         <option value="5">5</option>
                     </select>
-                    <button type="submit" class="register-btn"><img src="./IMG/cesta.svg" alt="" width="30px"></button><!--  //? Manda por el formulario el ID de cada uno de los productos -->
+                    <button type="submit" class="register-btn"  ><img src="./IMG/cesta.svg" alt="" width="30px"></button><!--  //? Manda por el formulario el ID de cada uno de los productos -->
                 </form>
                 <?php
                 echo "</div>";
