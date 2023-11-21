@@ -76,8 +76,8 @@
             <p>TIENDA</p>
         </div>
         <form class="d-flex" role="search" id="s-form">
-            <input class="form-control me-2" type="search" disabled value="Search" aria-label="Search" >
-            <button class="register-btn" type="submit" id="btn-buscar"><img src="./IMG/lupa.svg" alt=""></button>
+            <input class="form-control me-2" type="search" disabled value="Search" aria-label="Search" readonly>
+            <button class="register-btn" type="submit" id="btn-buscar" disabled><img src="./IMG/lupa.svg" alt=""></button>
         </form>
         <?php if($rol === "Admin") echo '<a id="aProd" href="./RegProductos.php">Subir Productos</a>' ?>
         <p>Estas logeado como: <?php echo $usuario ?></p>
