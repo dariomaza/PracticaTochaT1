@@ -27,3 +27,9 @@ select * from fotosUsuarios;
 SELECT p.idProducto, p.precioProducto, pc.cantidad FROM productos AS p JOIN productosCestas AS pc ON p.idProducto = pc.idProducto WHERE pc.idCesta = 2;
 
 select * from pedidos join lineaspedidos;
+
+select * from lineaspedidos;
+select * from pedidos;
+
+-- PARA VER LOS PEDIDOS Y LAS LINEAS 
+SELECT lp.idPedido, p.usuario,p.precioTotal,p.fechaPedido,lp.lineaPedido,lp.idProducto,lp.precioUnitario,lp.cantidad FROM pedidos p INNER JOIN LineasPedidos lp ON p.idPedido = lp.idPedido;

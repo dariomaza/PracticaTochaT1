@@ -1,3 +1,7 @@
+use tienda;
+
+
+
 
 
 create table productos(
@@ -9,10 +13,10 @@ create table productos(
     imagen varchar(200) not null
 );
 
-
+select * from usuarios;
 
 CREATE TABLE usuarios (
-	idUsuario int auto_increment primary key,
+	idUsuario int auto_increment primary key,productos
 	usuario VARCHAR(12) unique,
     contrasena varchar(255) not null,
     nombre VARCHAR(20) NOT NULL,
@@ -20,7 +24,6 @@ CREATE TABLE usuarios (
     fechaNacimiento DATE NOT NULL,
     Rol varchar(20) default 'cliente'
 );
-
 
 create table fotosUsuarios (
 	idFoto int auto_increment primary key,
@@ -64,5 +67,6 @@ CREATE TABLE LineasPedidos (
     FOREIGN KEY (idProducto) REFERENCES productos(idProducto),
     FOREIGN KEY (idPedido) REFERENCES pedidos(idPedido)
 );
+
 
 
