@@ -132,9 +132,6 @@
                 $precioUni = doubleval($precioUniTemp);
                 $cantidad = intval($cantidadTemp);
 
-                $alterProds = "UPDATE productos SET cantidad = (cantidad - $cantidad) WHERE idProducto = $idProducto;";
-                $conexion->query($alterProds); /* //! Cuando el usuario realiza el pedido se resta la cantidad comprada a stock total del producto */
-
                 $sqlInsert = "INSERT INTO lineaspedidos (lineaPedido, idProducto, precioUnitario, cantidad, idPedido) VALUES (
                         '$cont',
                         '$idProducto',

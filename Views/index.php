@@ -95,6 +95,9 @@
                         $sql = "INSERT INTO productosCestas (idProducto, idCesta, cantidad) VALUES ('$idProducto','$idCesta',$tmpCantidad)";
                         $conexion->query($sql);
                     }
+
+                    $alterProds = "UPDATE productos SET cantidad = (cantidad - $tmpCantidad) WHERE idProducto = $idProducto;";
+                    $conexion->query($alterProds); /* //! Cuando el usuario realiza el pedido se resta la cantidad comprada a stock total del producto */
                 }
 
             }
